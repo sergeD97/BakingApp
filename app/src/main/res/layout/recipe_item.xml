@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/item"
+    android:layout_margin="5dp"
+    android:background="@drawable/touch">
+
+
+    <ImageView
+        android:id="@+id/recipe_iv"
+        android:layout_width="0dp"
+        android:layout_height="120dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@color/colorRecipe" />
+
+    <TextView
+        android:id="@+id/name_tv"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:text="TextView"
+        android:textSize="18sp"
+        android:paddingBottom="5dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/recipe_iv"
+        app:layout_constraintStart_toStartOf="@+id/recipe_iv"
+        app:layout_constraintTop_toBottomOf="@+id/recipe_iv" />
+</android.support.constraint.ConstraintLayout>
