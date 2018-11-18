@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.util.DisplayMetrics;
 import android.view.Display;
@@ -42,6 +43,12 @@ public class DetailStepFragment extends Fragment {
     TextView desc;
     ScrollView scroll;
     SimpleExoPlayerView playerView;
+    long playerPosition;
+    boolean play;
+
+    public static final String POSTION ="postion.player";
+    public static final String PLAY_WHen ="play.player";
+    SimpleExoPlayer player;
     public static final float LARGE_SCREEN = 600;
 
     public static DetailStepFragment factory(Step step){
@@ -60,6 +67,12 @@ public class DetailStepFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        if(savedInstanceState == null){
+            playerPosition = 0;
+        }else{
+            playerPosition = savedInstanceState.getLong(POSTION, 0);
+        }
+
         // Inflate the layout for this fragment
         Step step = getArguments().getParcelable(StepsActivity.STEP_EXTRA);
         View rootView = inflater.inflate(R.layout.fragment_detail_step, container, false);
@@ -85,9 +98,10 @@ public class DetailStepFragment extends Fragment {
         TrackSelector trackSelector =
                 new DefaultTrackSelector(videoTrackSelectionFactory);
 
-       SimpleExoPlayer player = ExoPlayerFactory.newSimpleInstance(context, trackSelector);
+       player = ExoPlayerFactory.newSimpleInstance(context, trackSelector);
 
         playerView.setPlayer(player);
+
 
         DefaultHttpDataSourceFactory dataSourceFactory =
                 new DefaultHttpDataSourceFactory("BakingApp");
@@ -97,7 +111,9 @@ public class DetailStepFragment extends Fragment {
                 dataSourceFactory, extractorsFactory, null, null);
 
         player.prepare(videoSource);
+
         player.setPlayWhenReady(true);
+        player.seekTo(playerPosition);
     }
 
     @Override
@@ -127,6 +143,38 @@ public class DetailStepFragment extends Fragment {
             if(scroll != null){
                 scroll.setVisibility(View.VISIBLE);
             }
+        }
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (Util.SDK_INT <= 23) {
+            if (player!=null) {
+                player.release();
+                player = null;
+            }
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (Util.SDK_INT > 23) {
+            if (player!=null) {
+                player.release();
+                player = null;
+            }
+        }
+    }
+
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if(player != null){
+            outState.putLong(POSTION, player.getContentPosition());
         }
     }
 }

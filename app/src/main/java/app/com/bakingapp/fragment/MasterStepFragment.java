@@ -2,6 +2,7 @@ package app.com.bakingapp.fragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -19,6 +21,8 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.com.bakingapp.IngredientActivity;
+import app.com.bakingapp.MainActivity;
 import app.com.bakingapp.R;
 import app.com.bakingapp.adapter.StepListAdapter;
 import app.com.bakingapp.model.Ingredient;
@@ -71,17 +75,16 @@ public class MasterStepFragment extends Fragment implements  StepListAdapter.Ste
 
             recipe = getArguments().getParcelable(LIST_EXTRA);
             stepList = recipe.getSteps();
-        TextView servingTv, ingredientTv;
-        servingTv = (TextView)rootView.findViewById(R.id.serving_tv);
-        ingredientTv = (TextView)rootView.findViewById(R.id.ingredient_tv);
+        Button bt = (Button)rootView.findViewById(R.id.ingre_but);
 
-        servingTv.append(recipe.getServings()+"");
-
-        for(Ingredient ingr : recipe.getIngredients()){
-            ingredientTv.append(ingr.getIngredient() +" : "+ingr.getQuantity()+" "+ingr.getMeasure()+", ");
-        }
-
-
+        bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getContext(), IngredientActivity.class);
+                i.putExtra(MainActivity.RECIPE_EXTRA, recipe);
+                startActivity(i);
+            }
+        });
 
             RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.step_list);
             recyclerView.setHasFixedSize(true);

@@ -39,6 +39,10 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/recipe_app_widget_info" />
         </receiver>
+
+        <activity android:name=".IngredientActivity"></activity>
+        <service android:name=".widget.WidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"></service>
     </application>
 
 </manifest>

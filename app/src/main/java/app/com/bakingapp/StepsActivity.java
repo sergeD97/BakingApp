@@ -14,6 +14,7 @@ import app.com.bakingapp.fragment.DetailStepFragment;
 import app.com.bakingapp.fragment.MasterStepFragment;
 import app.com.bakingapp.model.Recipe;
 import app.com.bakingapp.model.Step;
+import app.com.bakingapp.utils.PreferenceUtils;
 
 public class StepsActivity extends AppCompatActivity implements StepListAdapter.StepClickListener{
     public static final String STEP_EXTRA = "app.com.step.extra";
@@ -44,6 +45,9 @@ public class StepsActivity extends AppCompatActivity implements StepListAdapter.
             fragmentManager.beginTransaction()
                     .add(R.id.list_frame, frag)
                     .commit();
+
+            //set the last recipe and update the app widget
+            PreferenceUtils.setLastRecipe(this, recipe.getId(), recipe.getName());
 
         }else{
             selectStep = savedInstanceState.getParcelable(STEP_EXTRA);

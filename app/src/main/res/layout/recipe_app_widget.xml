@@ -1,8 +1,8 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#09C"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:padding="@dimen/widget_margin">
 
 
@@ -10,19 +10,15 @@
     <TextView
         android:id="@+id/appwidget_text"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_margin="8dp"
-        android:layout_toLeftOf="@id/button"
         android:textColor="#ffffff"
         android:textSize="16sp"
         android:textStyle="bold|italic" />
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:text="@string/widget_next"
-        android:textSize="7sp"
-        android:layout_alignParentRight="true"/>
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
-</RelativeLayout>
+</LinearLayout>
